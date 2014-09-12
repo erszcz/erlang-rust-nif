@@ -1,0 +1,14 @@
+{application, er,
+ [
+  {description, "A bridge between Erlang and Rust"},
+  {vsn, "1"},
+  {modules, [
+             er
+            ]},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {env, []}
+ ]}.
