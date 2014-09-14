@@ -1,0 +1,9 @@
+[package]
+name = "er"
+version = "0.0.1"
+authors = ["Radek Szymczyszyn <lavrin@gmail.com>"]
+
+[lib]
+name = "er"
+path = "src/lib.rs"
+crate-type = ["dylib"]
