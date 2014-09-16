@@ -6,13 +6,11 @@ ERLNIF_INCLUDES := \
 	-I ${ERLANG_SRC_DIR}/erts/emulator/beam \
 	-I ${ERLANG_SRC_DIR}/erts/include/${ERLANG_PLATFORM}
 
-## Just for now. Lame but works...
-priv/er.${PLATFORM_SO}: c_src/er.o rust_src/target/liberrust.${PLATFORM_SO}
-	-mkdir priv
-	${CC} -fPIC -shared -L rust_src/target/ $< -o $@ -l errust
+native: priv/er.${PLATFORM_SO}
 
-c_src/er.o: c_src/er.c
-	${CC} ${ERLNIF_INCLUDES} -fPIC -c -o $@ $<
+priv/er.${PLATFORM_SO}: rust_src/target/liberrust.${PLATFORM_SO}
+	-mkdir priv
+	cp $< $@
 
 rust_src/target/liberrust.${PLATFORM_SO}: rust_src/src/c.rs
 	cd rust_src && cargo build && cd target && ln -s liber-*.${PLATFORM_SO} liberrust.${PLATFORM_SO}
