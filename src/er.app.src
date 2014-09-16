@@ -1,6 +1,6 @@
 {application, er,
  [
-  {description, "A bridge between Erlang and Rust"},
+  {description, "An example Erlang NIF implemented in Rust"},
   {vsn, "1"},
   {modules, [
              er
