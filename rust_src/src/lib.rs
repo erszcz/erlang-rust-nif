@@ -32,7 +32,7 @@ static mut nif_entry: c::ErlNifEntry = c::ErlNifEntry{
     major           : 2,
     minor           : 6,
     name            : 0 as *const c_char,
-    num_of_funcs    : 1,
+    num_of_funcs    : 0,
     funcs           : 0 as *mut c::ErlNifFunc,
     load            : None,
     reload          : None,
@@ -47,6 +47,7 @@ pub extern "C" fn nif_init() -> *mut c::ErlNifEntry
     unsafe {
         funcs[0].name = "native_add".to_c_str().unwrap();
         nif_entry.name = "er".to_c_str().unwrap();
+        nif_entry.num_of_funcs = funcs.len() as i32;
         nif_entry.funcs = funcs.as_mut_ptr();
         nif_entry.vm_variant = "beam.vanilla".to_c_str().unwrap();
         &mut nif_entry
