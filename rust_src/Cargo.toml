@@ -7,6 +7,3 @@ authors = ["Radek Szymczyszyn <lavrin@gmail.com>"]
 name = "er"
 path = "src/lib.rs"
 crate-type = ["dylib"]
-
-[target]
-linker = "-L/Users/erszcz/apps/erlang/17.1/lib/erl_interface-3.7.17/lib -lerl_interface -lei -flat_namespace -undefined suppress"
