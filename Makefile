@@ -43,19 +43,19 @@ ERLNIF_INCLUDES := \
 
 native: priv/er.${PLATFORM_SO}
 
-priv/er.${PLATFORM_SO}: rust_src/target/debug/liberrust.${PLATFORM_SO}
+priv/er.${PLATFORM_SO}: rust_src/target/debug/liber.${PLATFORM_SO}
 	@-mkdir priv >/dev/null 2>&1
 	cp $< $@
 
-rust_src/target/debug/liberrust.${PLATFORM_SO}: rust_src/src/c.rs
+rust_src/target/debug/liber.${PLATFORM_SO}: rust_src/src/c.rs
 ## This is hacky... basically, building fails due to missing linker flags on MacOSX and doesn't on Linux,
 ## that's why we behave differently on each platform.
 ifeq ($(shell uname), Linux)
 	cd rust_src && cargo build > cargo.log 2>&1
-	cd rust_src/target/debug && [ ! -f "liber-*.${PLATFORM_SO}" ] && ln -s liber-*.${PLATFORM_SO} liberrust.${PLATFORM_SO}
+	cd rust_src/target/debug
 else
 	-cd rust_src && cargo build > cargo.log 2>&1
-	cd rust_src/target/debug && cc -m64 -o liberrust.${PLATFORM_SO} er.o deps/liblibc-*.rlib ${LDFLAGS} ${MACOSX_LDFLAGS}
+	cd rust_src/target/debug && cc -m64 -o liber.${PLATFORM_SO} er.o deps/liblibc-*.rlib ${LDFLAGS} ${MACOSX_LDFLAGS}
 endif
 
 ERL_NIF_H := ${ERLANG_SRC_DIR}/erts/emulator/beam/erl_nif.h
