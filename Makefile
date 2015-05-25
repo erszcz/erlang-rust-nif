@@ -51,10 +51,10 @@ rust_src/target/debug/liberrust.${PLATFORM_SO}: rust_src/src/c.rs
 ## This is hacky... basically, building fails due to missing linker flags on MacOSX and doesn't on Linux,
 ## that's why we behave differently on each platform.
 ifeq ($(shell uname), Linux)
-	cd rust_src && cargo build >/dev/null 2>&1
+	cd rust_src && cargo build > cargo.log 2>&1
 	cd rust_src/target/debug && [ ! -f "liber-*.${PLATFORM_SO}" ] && ln -s liber-*.${PLATFORM_SO} liberrust.${PLATFORM_SO}
 else
-	-cd rust_src && cargo build >/dev/null 2>&1
+	-cd rust_src && cargo build > cargo.log 2>&1
 	cd rust_src/target/debug && cc -m64 -o liberrust.${PLATFORM_SO} er.o deps/liblibc-*.rlib ${LDFLAGS} ${MACOSX_LDFLAGS}
 endif
 
@@ -64,3 +64,14 @@ BINDGEN ?= ${HOME}/work/rust-bindgen/target/debug/bindgen -builtins
 
 rust_src/src/c.rs: ${ERL_NIF_H}
 	${BINDGEN} ${ERLNIF_INCLUDES} $< -o $@
+
+clean:
+	-rm priv/er.so
+	-rm rust_src/target/debug/liberrust.so
+	cd rust_src && cargo clean
+
+compile: native
+	./rebar compile
+
+test: compile
+	./test.sh

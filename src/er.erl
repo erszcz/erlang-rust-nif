@@ -1,6 +1,7 @@
 -module(er).
 
--export([f/2]).
+-export([f/2,
+         test/0]).
 
 %% Native library support
 -export([load/0]).
@@ -9,6 +10,9 @@
 %%
 %% API
 %%
+
+test() ->
+    io:format("~B~n", [f(123, 456)]).
 
 f(A, B) ->
     native_add(A, B).
