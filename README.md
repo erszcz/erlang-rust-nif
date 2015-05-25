@@ -11,24 +11,28 @@ It's a Rust crate that takes the idea of this example a lot further
 and delivers ready to use bindings.
 Don't miss [`ruster_unsafe demo`][ruster_demo].
 
-## On Linux
+## Running the code
 
 ```
-$ ./rebar compile
-$ erl -pa ebin
-> er:f(123, 2).
-125
+make test
 ```
 
-## On MacOS X
+If you got
 
 ```
-$ ./build.macosx.sh
+Test OK - the Rust NIF works
 ```
 
-It will spew some warnings and an `ld` failure, but the script takes care
-of relinking the intermediate object properly and placing it in `priv/`
-for Erlang to use.
+as the last output line then everything worked fine - you have the example
+dynamically loaded library in `priv/`.
+Otherwise, you might've received
+
+```
+Test failed - try building the dynamically loaded library manually
+```
+
+in which case the real fun begins - please inspect the `Makefile` and file
+an issue on what went wrong (did I mention that PRs are also welcome?).
 
 ## ?!
 
