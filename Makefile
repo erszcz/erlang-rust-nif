@@ -16,16 +16,16 @@ ERLNIF_INCLUDES := \
 
 native: priv/er.${PLATFORM_SO}
 
-priv/er.${PLATFORM_SO}: rust_src/target/liberrust.${PLATFORM_SO}
+priv/er.${PLATFORM_SO}: rust_src/target/debug/liberrust.${PLATFORM_SO}
 	-mkdir priv
 	cp $< $@
 
-rust_src/target/liberrust.${PLATFORM_SO}: rust_src/src/c.rs
-	cd rust_src && cargo build && cd target && ln -s liber-*.${PLATFORM_SO} liberrust.${PLATFORM_SO}
+rust_src/target/debug/er.o: rust_src/src/c.rs
+	cd rust_src && cargo build && cd target/debug && ln -s liber-*.${PLATFORM_SO} liberrust.${PLATFORM_SO}
 
 ERL_NIF_H := ${ERLANG_SRC_DIR}/erts/emulator/beam/erl_nif.h
 
-BINDGEN ?= ${HOME}/work/rust-bindgen/target/bindgen -builtins
+BINDGEN ?= ${HOME}/work/rust-bindgen/target/debug/bindgen -builtins
 
 rust_src/src/c.rs: ${ERL_NIF_H}
 	${BINDGEN} ${ERLNIF_INCLUDES} $< -o $@
