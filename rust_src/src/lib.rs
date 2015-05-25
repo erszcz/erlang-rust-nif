@@ -1,8 +1,6 @@
 extern crate libc;
 use libc::c_char;
 use libc::c_int;
-use std::ffi::CString;
-use std::mem;
 mod c;
 
 #[no_mangle]
@@ -46,11 +44,11 @@ static mut nif_entry: c::ErlNifEntry = c::ErlNifEntry{
 pub extern "C" fn nif_init() -> *mut c::ErlNifEntry
 {
     unsafe {
-        funcs[0].name = CString::from_slice("native_add".as_bytes()).as_ptr();
-        nif_entry.name = CString::from_slice("er".as_bytes()).as_ptr();
+        funcs[0].name = b"native_add\0".as_ptr() as *const i8;
+        nif_entry.name = b"er\0".as_ptr() as *const i8;
         nif_entry.num_of_funcs = funcs.len() as i32;
         nif_entry.funcs = funcs.as_mut_ptr();
-        nif_entry.vm_variant = CString::from_slice("beam.vanilla".as_bytes()).as_ptr();
+        nif_entry.vm_variant = b"beam.vanilla\0".as_ptr() as *const i8;
         &mut nif_entry
     }
 }

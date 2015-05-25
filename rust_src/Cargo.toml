@@ -7,3 +7,6 @@ authors = ["Radek Szymczyszyn <lavrin@gmail.com>"]
 name = "er"
 path = "src/lib.rs"
 crate-type = ["dylib"]
+
+[dependencies.libc]
+name = "libc"
