@@ -13,6 +13,16 @@ Don't miss [`ruster_unsafe demo`][ruster_demo].
 
 ## Running the code
 
+Adjust the following options in `Makefile` to match your environment:
+
+```
+ERLANG_SRC_DIR ?= ${HOME}/.kerl/builds/17.1/otp_src_17.1
+ERLANG_EI_LIB_DIR ?= ${HOME}/apps/erlang/17.1/lib/erl_interface-3.7.17/lib
+RUST_DIR ?= ${HOME}/apps/rust/1.0.0
+```
+
+Then run:
+
 ```
 make test
 ```
